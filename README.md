@@ -1,6 +1,6 @@
 # Breaking Time Invariance: Assorted-Time Normalization for RNNs paper Supplementary Material
 
-This repository contains the code used in the <a href="https://arxiv.org/abs/2209.14439">Breaking Time Invariance: Assorted-Time Normalization for RNNs paper</a>.
+This repository contains the code used in the <a target="_blank" href="https://arxiv.org/abs/2209.14439">Breaking Time Invariance: Assorted-Time Normalization for RNNs paper</a>.
 
 Required packages:
 + CUDA 9.0
