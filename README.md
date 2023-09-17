@@ -9,6 +9,7 @@ Required packages:
 + numpy==1.14.5
 + tqdm==4.60.0
 
+## Adding Problem
 To run adding problem with T=100:
 + LSTM
   ```sh
@@ -23,6 +24,7 @@ To run adding problem with T=100:
   python adding_problem.py --mode atn
   ```
 
+## Copying Problem
 To run copying problem with T=100:
 + LSTM
   ```sh
@@ -37,6 +39,7 @@ To run copying problem with T=100:
   python copying_problem.py --mode atn
   ```
 
+## Character Penn Treebank (PTB)
 To run character language modeling with Penn Treebank (PTB) dataset for LN/ATN model. First, go to `ptb` folder and acquire the Penn Treebank dataset:
 ```sh
 cd ptb
@@ -52,6 +55,7 @@ Then
   python main.py
 ```
 
+## Note
 In addition, we provide the ATN-LSTM file `atn_lstm.py` that has the implementation of our method.
 
 If you use this code or our results in your research, please cite as appropriate:
