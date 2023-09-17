@@ -13,14 +13,19 @@ To run adding problem with T=100 for LSTM/LN/ATN model:
 + `python adding_problem.py --mode ln`
 + `python adding_problem.py --mode atn`
 
-To run copying problem with T=100 for LSTM/LN/ATN model:
+To run copying problem with T=100 for:
 + LSTM
   ```sh
   python copying_problem.py --mode lstm
   ```
-+ ``
-+ `python copying_problem.py --mode ln`
-+ `python copying_problem.py --mode atn`
++ LN
+  ```sh
+  python copying_problem.py --mode ln
+  ```
++ ATN (ours)
+  ```sh
+  python copying_problem.py --mode atn
+  ```
 
 To run character language modeling with Penn Treebank (PTB) dataset for LN/ATN model:
 `cd ptb` and run `getdata.sh` to acquire the Penn Treebank dataset
