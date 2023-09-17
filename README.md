@@ -1,6 +1,6 @@
 # Breaking Time Invariance: Assorted-Time Normalization for RNNs paper Supplementary Material
 
-This repository contains the code used in the <a target="_blank" href="https://arxiv.org/abs/2209.14439">Breaking Time Invariance: Assorted-Time Normalization for RNNs paper</a>.
+This repository contains the code used in the <a href="https://arxiv.org/abs/2209.14439">Breaking Time Invariance: Assorted-Time Normalization for RNNs paper</a>.
 
 Required packages:
 + CUDA 9.0
@@ -45,12 +45,12 @@ To run character language modeling with Penn Treebank (PTB) dataset for LN/ATN m
 cd ptb
 bash getdata.sh
 ```
-Then 
+Then you should be able to run
 + LN
 ```sh
   python main.py --max_length 1
 ```
-+ LSTM
++ ATN (ours)
 ```sh
   python main.py
 ```
@@ -58,6 +58,7 @@ Then
 ## Note
 In addition, we provide the ATN-LSTM file `atn_lstm.py` that has the implementation of our method.
 
+## Reference 
 If you use this code or our results in your research, please cite as appropriate:
 
 ```
@@ -71,7 +72,6 @@ If you use this code or our results in your research, please cite as appropriate
   year = {2022},
   copyright = {Creative Commons Attribution 4.0 International}
 }
-
 ```
 
 ## Acknowledgments
