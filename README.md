@@ -14,7 +14,11 @@ To run adding problem with T=100 for LSTM/LN/ATN model:
 + `python adding_problem.py --mode atn`
 
 To run copying problem with T=100 for LSTM/LN/ATN model:
-+ `python copying_problem.py --mode lstm`
++ LSTM
+  ```sh
+  python copying_problem.py --mode lstm
+  ```
++ ``
 + `python copying_problem.py --mode ln`
 + `python copying_problem.py --mode atn`
 
