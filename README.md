@@ -1,4 +1,4 @@
-# Breaking Time Invariance: Assorted-Time Normalization for RNNs paper Supplementary Material
+# Breaking Time Invariance: Assorted-Time Normalization for RNNs
 
 This repository contains the code used in the <a href="https://arxiv.org/abs/2209.14439">Breaking Time Invariance: Assorted-Time Normalization for RNNs paper</a>.
 
