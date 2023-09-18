@@ -3,33 +3,33 @@ from torch import nn
 from torch.nn import init
 
 class ATN(nn.Module):
-  def __init__(self, input_size, max_time=5, eps = 1e-5):
-    super(ATN, self).__init__()
-    self.time_step = 0
-    self.eps = eps
-    self.k = max_time
-    self.input_memory = []
-    self.weight = nn.Parameter(torch.FloatTensor(input_size))
-    self.bias = nn.Parameter(torch.FloatTensor(input_size))
-    self.weight.data = torch.ones_like(self.weight.data)
-    self.bias.data = torch.zeros_like(self.bias.data)
-    self.reset_in_memory()
+    def __init__(self, input_size, max_time=5, eps = 1e-5):
+        super(ATN, self).__init__()
+        self.time_step = 0
+        self.eps = eps
+        self.k = max_time
+        self.input_memory = []
+        self.weight = nn.Parameter(torch.FloatTensor(input_size))
+        self.bias = nn.Parameter(torch.FloatTensor(input_size))
+        self.weight.data = torch.ones_like(self.weight.data)
+        self.bias.data = torch.zeros_like(self.bias.data)
+        self.reset_in_memory()
 
-  def reset_in_memory(self):
-    self.input_memory = []
-    self.time_step = 0
+    def reset_in_memory(self):
+        self.input_memory = []
+        self.time_step = 0
 
-  def forward(self, new_input): #new_input of the size [batch, input/hidden]
-    if self.time_step >= self.k:
-      self.input_memory.pop(0)
-      self.input_memory.append(new_input)
-    else:
-      self.input_memory.append(new_input)
-    mean = torch.mean(torch.stack(self.input_memory), dim=[0,2], keepdim = True)
-    var = torch.var(torch.stack(self.input_memory), dim=[0,2], unbiased = False, keepdim = True)
-    x_norm = (new_input - mean) * torch.pow(var + self.eps,-0.5)
-    self.time_step += 1
-    return  (x_norm*self.weight + self.bias).squeeze()
+    def forward(self, new_input): #new_input of the size [batch, input/hidden]
+        if self.time_step >= self.k:
+            self.input_memory.pop(0)
+            self.input_memory.append(new_input)
+        else:
+            self.input_memory.append(new_input)
+        mean = torch.mean(torch.stack(self.input_memory), dim=[0,2], keepdim = True)
+        var = torch.var(torch.stack(self.input_memory), dim=[0,2], unbiased = False, keepdim = True)
+        x_norm = (new_input - mean) * torch.pow(var + self.eps,-0.5)
+        self.time_step += 1
+        return  (x_norm*self.weight + self.bias).squeeze()
     
 class Normalized_LSTMCell(nn.Module):
 
@@ -41,12 +41,14 @@ class Normalized_LSTMCell(nn.Module):
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.use_bias = use_bias
+        # Initializing Weights and Biases
         self.weight_ih = nn.Parameter(
             torch.FloatTensor(input_size, 4 * hidden_size))
         self.weight_hh = nn.Parameter(
             torch.FloatTensor(hidden_size, 4 * hidden_size))
         self.bias_h = nn.Parameter(torch.FloatTensor(4 * hidden_size))
         self.bias_x = nn.Parameter(torch.FloatTensor(4 * hidden_size))
+        # Initialization of normalization method within LSTM cell
         if args.mode == 'atn':
             self.norm_hh = ATN(4 * hidden_size, args.max_time, use_bias = use_bias)
             self.norm_ih = ATN(4 * hidden_size, args.max_time, use_bias = use_bias)
@@ -60,25 +62,25 @@ class Normalized_LSTMCell(nn.Module):
 
     def reset_parameters(self):
         """
-        Initialize parameters following the way proposed in the paper.
+        Initialize parameters
         """
         with torch.no_grad():
-          # The input-to-hidden weight matrix is initialized orthogonally.
-          init.orthogonal_(self.weight_ih.data)
-          # The hidden-to-hidden weight matrix is initialized as an identity
-          # matrix.
-          weight_hh_data = torch.eye(self.hidden_size)
-          weight_hh_data = weight_hh_data.repeat(1, 4)
-          self.weight_hh.set_(weight_hh_data)
-          # The bias is initialized to zero vectors.
-          init.constant_(self.bias_h.data, val=0)
-          init.constant_(self.bias_x.data, val=0)
+            # The input-to-hidden weight matrix is initialized orthogonally.
+            init.orthogonal_(self.weight_ih.data)
+            # The hidden-to-hidden weight matrix is initialized as an identity
+            # matrix.
+            weight_hh_data = torch.eye(self.hidden_size)
+            weight_hh_data = weight_hh_data.repeat(1, 4)
+            self.weight_hh.set_(weight_hh_data)
+            # The bias is initialized to zero vectors.
+            init.constant_(self.bias_h.data, val=0)
+            init.constant_(self.bias_x.data, val=0)
 
 
     def forward(self, input_, hx):
         """
         Args:
-            input_: A (batch, input_size) tensor containing input
+            input_: A (batch, input_size) tensor containing input 
                 features.
             hx: A tuple (h_0, c_0), which contains the initial hidden
                 and cell state, where the size of both states is
